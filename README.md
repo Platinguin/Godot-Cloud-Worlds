@@ -1,6 +1,6 @@
 # Godot-Cloud-Worlds
 
-This is more or less a prototype to see if its possible to implement volumetric clouds which can be reached by the player.
+This is more or less a prototype to see if its possible to implement volumetric clouds which can be reached by the player. These clouds are not production ready.
 
 The project was created with Godot 4.2.2 win64
 
