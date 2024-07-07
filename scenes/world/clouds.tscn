@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=3 uid="uid://djl3q6ynbkau0"]
+
+[ext_resource type="Script" path="res://scenes/world/clouds.gd" id="1_artgg"]
+[ext_resource type="Shader" path="res://shaders/cloud_sdf.gdshader" id="3_p8xnm"]
+[ext_resource type="Shader" path="res://shaders/buffer_sky.gdshader" id="5_11ck4"]
+
+[sub_resource type="Environment" id="Environment_upbsr"]
+
+[sub_resource type="World3D" id="World3D_dhs8m"]
+environment = SubResource("Environment_upbsr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_syhg6"]
+render_priority = 0
+shader = ExtResource("5_11ck4")
+shader_parameter/rayleigh = 2.0
+shader_parameter/rayleigh_color = Color(0.3, 0.405, 0.6, 1)
+shader_parameter/mie = 0.005
+shader_parameter/mie_eccentricity = 0.8
+shader_parameter/mie_color = Color(1, 0.811765, 0.552941, 1)
+shader_parameter/turbidity = 10.0
+shader_parameter/sun_disk_scale = 1.0
+shader_parameter/ground_color = Color(0.1, 0.07, 0.034, 1)
+shader_parameter/exposure = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ruwh8"]
+flip_faces = true
+radial_segments = 8
+rings = 4
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dago3"]
+viewport_path = NodePath("buffer_sky")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3xcas"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_p8xnm")
+shader_parameter/render_normal_offset = 7.0
+shader_parameter/render_normal_blur = 10.0
+shader_parameter/render_ao_amount = 2.0
+shader_parameter/render_hg_base = 0.7
+shader_parameter/render_hg_amount = 0.5
+shader_parameter/render_hg_mask = 0.05
+shader_parameter/render_hg_color_saturation = 1.0
+shader_parameter/render_hg_color_power = 0.2
+shader_parameter/render_sky_color_saturation = 1.0
+shader_parameter/render_direct_shadow_ramp_dist = 1000.0
+shader_parameter/render_direct_shadow_jitter = 0.05
+shader_parameter/render_short_shadow_amount = 0.1
+shader_parameter/render_short_shadow_dist = 70.0
+shader_parameter/render_smooth_shadow_offset = 150.0
+shader_parameter/render_smooth_shadow_bias = 100.0
+shader_parameter/render_smooth_shadow_amount = 1.0
+shader_parameter/buffer_sky = SubResource("ViewportTexture_dago3")
+
+[sub_resource type="SphereMesh" id="SphereMesh_jgq0g"]
+flip_faces = true
+radius = 9000.0
+height = 18000.0
+radial_segments = 8
+rings = 4
+
+[node name="clouds" type="Node"]
+script = ExtResource("1_artgg")
+
+[node name="buffer_sky" type="SubViewport" parent="."]
+own_world_3d = true
+world_3d = SubResource("World3D_dhs8m")
+use_hdr_2d = true
+positional_shadow_atlas_size = 64
+positional_shadow_atlas_16_bits = false
+size = Vector2i(128, 64)
+
+[node name="sky" type="MeshInstance3D" parent="buffer_sky"]
+material_override = SubResource("ShaderMaterial_syhg6")
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+gi_mode = 0
+mesh = SubResource("SphereMesh_ruwh8")
+skeleton = NodePath("../..")
+
+[node name="camera" type="Camera3D" parent="buffer_sky"]
+
+[node name="clouds" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_3xcas")
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("SphereMesh_jgq0g")

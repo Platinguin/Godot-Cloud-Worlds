@@ -1,0 +1,95 @@
+[gd_scene load_steps=17 format=3 uid="uid://o30gir8h2ufu"]
+
+[ext_resource type="Script" path="res://scenes/basic/debug.gd" id="2_3sqim"]
+[ext_resource type="PackedScene" uid="uid://djl3q6ynbkau0" path="res://scenes/world/clouds.tscn" id="2_38qtq"]
+[ext_resource type="PackedScene" uid="uid://croxc3ih02m6b" path="res://scenes/basic/camera.tscn" id="2_ew6s1"]
+[ext_resource type="CompressedTexture3D" uid="uid://bwvwaoihjy78g" path="res://textures/clouds/cloud_sdf_base.exr" id="3_xqfxp"]
+[ext_resource type="CompressedTexture3D" uid="uid://437feiv1oerc" path="res://textures/clouds/cloud_sdf_detail.exr" id="4_6liwh"]
+[ext_resource type="Script" path="res://scenes/basic/sunlight.gd" id="4_uk33e"]
+[ext_resource type="CompressedTexture3D" uid="uid://4ncscg8jgec0" path="res://textures/clouds/cloud_volume_a.png" id="5_1gko6"]
+[ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="5_3hakk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7bm1i"]
+gradient = ExtResource("5_3hakk")
+width = 256
+height = 10
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_c28mf"]
+mie_color = Color(1, 0.811765, 0.552941, 1)
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_dolyt"]
+sky_material = SubResource("PhysicalSkyMaterial_c28mf")
+
+[sub_resource type="Environment" id="Environment_288wc"]
+background_mode = 2
+sky = SubResource("Sky_dolyt")
+tonemap_mode = 3
+ssao_enabled = true
+ssil_enabled = true
+volumetric_fog_anisotropy = 0.9
+volumetric_fog_length = 256.0
+volumetric_fog_ambient_inject = 10.0
+adjustment_saturation = 0.3
+adjustment_color_correction = SubResource("GradientTexture2D_7bm1i")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_vf470"]
+auto_exposure_enabled = true
+auto_exposure_scale = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfr7x"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_avnke"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e0aqa"]
+size = Vector2(10, 10)
+
+[node name="main" type="Node"]
+
+[node name="camera" parent="." instance=ExtResource("2_ew6s1")]
+
+[node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light", "camera") instance=ExtResource("2_38qtq")]
+world_environment = NodePath("../WorldEnvironment")
+directional_light = NodePath("../sunlight")
+camera = NodePath("../camera")
+cloud_base_texture = ExtResource("3_xqfxp")
+cloud_detail_texture = ExtResource("4_6liwh")
+cloud_volume_texture = ExtResource("5_1gko6")
+wind_vector = Vector2(2, 0)
+wind_uplift = 3.0
+
+[node name="debug" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -225.0
+offset_top = 11.0
+offset_right = -14.0
+offset_bottom = 378.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "FPS = 100"
+horizontal_alignment = 2
+script = ExtResource("2_3sqim")
+
+[node name="sunlight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.682387, -0.466591, 0.562709, -0.397852, 0.408724, 0.821376, -0.613239, -0.784371, 0.0932734, 0, 0, 0)
+rotation_edit_mode = 2
+light_color = Color(1, 0.811765, 0.552941, 1)
+light_energy = 0.3
+light_angular_distance = 1.0
+shadow_enabled = true
+directional_shadow_blend_splits = true
+script = ExtResource("4_uk33e")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_288wc")
+camera_attributes = SubResource("CameraAttributesPractical_vf470")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_bfr7x")
+mesh = SubResource("SphereMesh_avnke")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("PlaneMesh_e0aqa")

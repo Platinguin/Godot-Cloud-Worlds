@@ -1,0 +1,126 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot - Cloud Worlds"
+run/main_scene="res://scenes/basic/main.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+
+[display]
+
+window/vsync/vsync_mode=0
+
+[input]
+
+keyboard_right={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"echo":false,"script":null)
+]
+}
+keyboard_left={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"echo":false,"script":null)
+]
+}
+keyboard_forward={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"echo":false,"script":null)
+]
+}
+keyboard_back={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":115,"echo":false,"script":null)
+]
+}
+hide_menu={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
+
+[rendering]
+
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
+textures/default_filters/anisotropic_filtering_level=0
+anti_aliasing/quality/use_taa=true
+occlusion_culling/use_occlusion_culling=true
+
+[shader_globals]
+
+cloud_base_texture={
+"type": "sampler3D",
+"value": "res://textures/clouds/cloud_sdf_base.exr"
+}
+cloud_detail_texture={
+"type": "sampler3D",
+"value": "res://textures/clouds/cloud_sdf_detail.exr"
+}
+cloud_base_height={
+"type": "float",
+"value": 1000.0
+}
+cloud_base_scale={
+"type": "float",
+"value": 1000.0
+}
+cloud_detail_scale={
+"type": "float",
+"value": 420.0
+}
+cloud_detail_amount={
+"type": "float",
+"value": 0.5
+}
+cloud_detail_dist={
+"type": "float",
+"value": 10.0
+}
+cloud_volume_scale={
+"type": "float",
+"value": 150.0
+}
+cloud_volume_density_low={
+"type": "float",
+"value": 4.0
+}
+cloud_volume_density_high={
+"type": "float",
+"value": 10.0
+}
+wind_vector={
+"type": "vec2",
+"value": Vector2(1, 0)
+}
+sun_light_direction={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+sun_light_color={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+sun_light_energy={
+"type": "float",
+"value": 0.3
+}
+cloud_volume_texture={
+"type": "sampler3D",
+"value": "res://textures/clouds/cloud_volume_a.png"
+}
+wind_uplift={
+"type": "float",
+"value": 2.0
+}
+cloud_base_squeeze={
+"type": "float",
+"value": 0.5
+}

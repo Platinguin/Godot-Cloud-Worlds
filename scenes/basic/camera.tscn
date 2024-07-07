@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://croxc3ih02m6b"]
+
+[ext_resource type="Script" path="res://scenes/basic/camera.gd" id="1_oyymy"]
+
+[node name="camera" type="Camera3D"]
+current = true
+near = 0.01
+far = 20000.0
+script = ExtResource("1_oyymy")
