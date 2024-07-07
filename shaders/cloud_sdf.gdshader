@@ -132,7 +132,7 @@ void lightmarch_cloud(in vec4 r_ori, in vec4 r_dir, in vec4 cloud_transform, ino
 	cloud_normal.y = (cloud_density_offset_up - cloud_density);
 	cloud_normal.z = (cloud_density_offset_forward - cloud_density);
 	cloud_normal /= render_normal_offset;
-	//cloud_normal = normalize(cloud_normal); // Not needed
+	cloud_normal = normalize(cloud_normal);
 	// Cloud Density At Upper Offset For Smooth Shadow
 	float cloud_density_smooth = get_cloud_base(vec4(world_pos, r_ori.w), vec4( vec3(0.0, 1.0, 0.0), render_smooth_shadow_offset), cloud_transform);
 	cloud_density_smooth = exp( max(-cloud_density_smooth + render_smooth_shadow_bias, 0.0) * -render_smooth_shadow_amount * 0.001);
